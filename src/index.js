@@ -4,10 +4,18 @@ import { getWeather } from './weather.js'
 
 getWeather('Sofia').then(weather => {
     if(weather) {
-        console.log('Current temp in Sofia is:', convertToCelsius(weather.temp) + '°C')
+        console.log('Current temp in Sofia is:', weather.temp + '°C')
     }
 })
 
-function convertToCelsius(temp) {
-    return ((5 / 9) * (temp - 32)).toFixed(1)
-}
+const form = document.querySelector('#form')
+
+form.addEventListener('submit', (event) => {
+    const location = document.querySelector('#location').value
+    event.preventDefault()
+    console.log(getWeather(location).then(weather => {
+        if(weather) {
+            console.log(`Current temp in ${location} is`, weather.temp + '°C')
+        }
+    }))
+})
