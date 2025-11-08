@@ -18,4 +18,15 @@ form.addEventListener('submit', (event) => {
             console.log(`Current temp in ${location} is`, weather.temp + '°C')
         }
     }))
+    const paraLocation = document.querySelector('#para-location')
+    const paraTemp = document.querySelector('#para-temperature')
+    const paraConditions = document.querySelector('#para-conditions')
+    paraLocation.innerText = `for ${location}:`
+
+    getWeather(location).then(weather => {
+        if(weather) {
+            paraTemp.innerText = `current temp: ${weather.temp}°C`
+            paraConditions.innerText = `current conditions: ${weather.currentConditions}`
+        }
+    })
 })
