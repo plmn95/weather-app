@@ -2,12 +2,6 @@ import "./styles.css";
 
 import { getWeather } from './weather.js'
 
-getWeather('Sofia').then(weather => {
-    if(weather) {
-        console.log('Current temp in Sofia is:', weather.temp + '°C')
-    }
-})
-
 const form = document.querySelector('#form')
 
 form.addEventListener('submit', (event) => {
@@ -18,13 +12,13 @@ form.addEventListener('submit', (event) => {
             console.log(`Current temp in ${location} is`, weather.temp + '°C')
         }
     }))
-    const paraLocation = document.querySelector('#para-location')
+    const paraTimezone = document.querySelector('#para-timezone')
     const paraTemp = document.querySelector('#para-temperature')
     const paraConditions = document.querySelector('#para-conditions')
-    paraLocation.innerText = `for ${location}:`
 
     getWeather(location).then(weather => {
         if(weather) {
+            paraTimezone.innerText = `showing for: ${weather.timezone}`
             paraTemp.innerText = `current temp: ${weather.temp}°C`
             paraConditions.innerText = `current conditions: ${weather.currentConditions}`
         }
