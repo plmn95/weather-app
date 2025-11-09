@@ -1,5 +1,6 @@
 class WeatherInfo {
-    constructor(temp, conditions, timezone) {
+    constructor(location, temp, conditions, timezone) {
+        this.location = location
         this.temp = temp
         this.currentConditions = conditions
         this.timezone = timezone
@@ -23,18 +24,9 @@ export async function getWeather(location) {
     console.log(data)
     console.log(`found ${data.resolvedAddress}`)
     return new WeatherInfo(
+        data.resolvedAddress,
         data.currentConditions.temp, 
         data.currentConditions.conditions,
         data.timezone)
+        
 }
-
-navigator.geolocation.getCurrentPosition(
-    (location) => {
-        console.log('fetched user location')
-        const coords = (`${location.coords.latitude}, ${location.coords.longitude}`)
-        console.log(coords)
-        getWeather(coords)
-    },
-    (error) => {
-        console.log('error', error.message)
-    })

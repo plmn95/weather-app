@@ -1,26 +1,19 @@
 import "./styles.css";
 
-import { getWeather } from './weather.js'
+import { getWeather } from "./weather.js";
+import { showWeather } from "./display.js";
 
-const form = document.querySelector('#form')
 
-form.addEventListener('submit', (event) => {
-    const location = document.querySelector('#location').value
-    event.preventDefault()
-    console.log(getWeather(location).then(weather => {
-        if(weather) {
-            console.log(`Current temp in ${location} is`, weather.temp + '°C')
-        }
-    }))
-    const paraTimezone = document.querySelector('#para-timezone')
-    const paraTemp = document.querySelector('#para-temperature')
-    const paraConditions = document.querySelector('#para-conditions')
-
-    getWeather(location).then(weather => {
-        if(weather) {
-            paraTimezone.innerText = `showing for: ${weather.timezone}`
-            paraTemp.innerText = `current temp: ${weather.temp}°C`
-            paraConditions.innerText = `current conditions: ${weather.currentConditions}`
-        }
+document.addEventListener('DOMContentLoaded', () => {
+    navigator.geolocation.getCurrentPosition(
+        async (position) => {
+            console.log('fetched user location')
+            const weather = await getWeather(`${position.coords.latitude.toFixed(4)}, ${position.coords.longitude.toFixed(4)}`)
+            showWeather(weather)
+        },
+        (error) => {
+            console.log('error', error.message)
     })
 })
+
+
